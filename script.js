@@ -1,5 +1,5 @@
 let displayValue = "0";
-
+const display = document.querySelector('#display-result');
 const add = function(num1, num2) {
     return num1 + num2;
 }
@@ -31,5 +31,6 @@ const digit = document.querySelectorAll('.digit');
 
 digit.forEach(event => event.addEventListener('click', e => {
     displayValue = e.target.textContent;
+    display.textContent = displayValue;
     console.log(displayValue);
 }));
