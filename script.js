@@ -1,3 +1,5 @@
+let displayValue = "0";
+
 const add = function(num1, num2) {
     return num1 + num2;
 }
@@ -24,3 +26,10 @@ const divide = function(num1, num2) {
 const operate = function(operator, num1, num2) {
     return operator(num1, num2);
 }
+
+const digit = document.querySelectorAll('.digit');
+
+digit.forEach(event => event.addEventListener('click', e => {
+    displayValue = e.target.textContent;
+    console.log(displayValue);
+}));
