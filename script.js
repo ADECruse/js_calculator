@@ -1,11 +1,13 @@
-let displayValue = "";
-let display2 = [];
-const reducer = (accumulator, currentValue) => accumulator + currentValue;
 const display = document.querySelector('#display-result');
 const digit = document.querySelectorAll('.digit');
 const operator = document.querySelectorAll('.operator');
 const equals = document.querySelector('#equals');
 const clear = document.querySelector('#clear');
+const decimalButton = document.querySelector('#decimal');
+const reducer = (accumulator, currentValue) => accumulator + currentValue;
+let displayValue = "";
+let display2 = [];
+let decimalClicked = false;
 
 // Operator functions
 
@@ -34,8 +36,7 @@ let storedValues = {
 const operate = function(arr) {
     let a = arr.firstNum;
     let b = arr.secondNum;
-    let c = arr.operator(a,b);
-    
+    let c = arr.operator(a,b); 
     return c
 };
 
@@ -69,27 +70,36 @@ const nextFunction = function() {
     }
     display.textContent = storedValues.firstNum;
     display2 = [];
+    decimalClicked = false
 };
 
-let decimal = false;
 
 //Button functions
 
 digit.forEach(event => event.addEventListener('click', e => {
     display2.push(e.target.textContent)
-    if (e.target.textContent === '.') {
-        decimal = true;
-    }
+    // if (e.target.textContent === '.') {
+    //     decimal = true;
+    // }
     display.textContent = display2.reduce(reducer);
 }));
 
+decimalButton.addEventListener('click', e => {
+    if (decimalClicked === false) {
+        display2.push('.')
+        display.textContent = display2.reduce(reducer);
+        decimalClicked = true
+    }
+});
+
 operator.forEach(event => event.addEventListener('click', nextFunction))
 
-equals.addEventListener('click', function (params) {
+equals.addEventListener('click', function() {
     storedValues.secondNum = parseFloat(display.textContent);
     display.textContent = operate(storedValues)
     storedValues.firstNum = 0;
     storedValues.secondNum = 0;
+    decimalClicked = false
     console.table(storedValues);
 }); 
 
@@ -101,5 +111,6 @@ clear.addEventListener('click', function() {
     }
     display2 = [];
     display.textContent = "0";
+    decimalClicked = false
 } )
 
