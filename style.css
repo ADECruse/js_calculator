@@ -11,7 +11,6 @@ main {
 }
 
 #calculator {
-    
     width: auto;
     margin: 0.5rem;
     padding: 1rem;
@@ -19,11 +18,10 @@ main {
     display: grid;
     gap: 0;
     grid-template-columns: 5rem 5rem 5rem 5rem;
-    grid-template-rows: 5rem 5rem 5rem 5rem 5rem 5rem 5rem;
+    grid-template-rows: 5rem 5rem 5rem 5rem 5rem 5rem;
     grid-template-areas: 
     "display display display display"
     "clear . . operators" 
-    "digit digit digit operators" 
     "digit digit digit operators" 
     "digit digit digit operators" 
     "digit digit digit operators" 
@@ -36,6 +34,7 @@ main {
     background-color: aquamarine;
     margin: 0rem;
     text-align: right;
+    font-size: 3rem;
 }
 
 #digits {
@@ -73,4 +72,6 @@ button {
     height: 5rem;
     background-color: green;
     color: white;
+    font-size: 3rem;
+    line-height: 0;
 }
