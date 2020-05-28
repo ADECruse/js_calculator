@@ -3,7 +3,7 @@ let display2 = [];
 const reducer = (accumulator, currentValue) => accumulator + currentValue;
 const display = document.querySelector('#display-result');
 const digit = document.querySelectorAll('.digit');
-const operator = document.querySelector('.operator');
+const operator = document.querySelectorAll('.operator');
 const equals = document.querySelector('#equals');
 const clear = document.querySelector('#clear');
 
@@ -30,61 +30,60 @@ let storedValues = {
     firstNum: 0,
     secondNum: 0,
 };
- //reduce ?
-// const nextFunction = function() {
-
-    
-//     storedValues.firstNum = parseFloat(displayValue);
-//     displayValue = ""
-//     storedValues.operator = add;
-// };
-
-
-// const operate = function(arr) {
-//     let a = arr.firstNum;
-//     let b = arr.secondNum;
-//     let c = arr.operator(a,b);
-//     // return c(a, b);
-//     console.log(c);
-//     display.textContent = c;
-// };
 
 const operate = function(arr) {
     let a = arr.firstNum;
     let b = arr.secondNum;
     let c = arr.operator(a,b);
-    console.log(c);
+    
     return c
 };
 
+// if (arr.operator === divide) {
+//     if (arr.firstNum || arr.secondNum === 0) {
+//         window.alert("You can't divide by zero!");
+//     } else {
+//         console.log(c);
+//         return c;
+//     }
+// }
+
+
 const nextFunction = function() {
     storedValues.secondNum = parseFloat(display.textContent);
-    console.log({storedValues});
+    console.log(this.id);
     storedValues.firstNum = operate(storedValues);
-    storedValues.operator = add;
+    switch (this.id) {
+        case "add":
+            storedValues.operator = add;
+            break;
+        case "subtract":
+            storedValues.operator = subtract;
+            break;
+        case "multiply":
+            storedValues.operator = multiply;
+            break;
+        case "divide":
+            storedValues.operator = divide;
+            break;
+    }
     display.textContent = storedValues.firstNum;
     display2 = [];
 };
 
+let decimal = false;
+
 //Button functions
 
-// digit.forEach(event => event.addEventListener('click', e => {
-//     displayValue = displayValue + e.target.textContent;
-//     display.textContent = displayValue;
-// }));
-
 digit.forEach(event => event.addEventListener('click', e => {
-    // displayValue = displayValue + e.target.textContent
     display2.push(e.target.textContent)
+    if (e.target.textContent === '.') {
+        decimal = true;
+    }
     display.textContent = display2.reduce(reducer);
 }));
 
-operator.addEventListener('click', nextFunction);
-
-// equals.addEventListener('click', function (params) {
-//     storedValues.secondNum = parseFloat(displayValue);
-//     operate(storedValues)
-// }); 
+operator.forEach(event => event.addEventListener('click', nextFunction))
 
 equals.addEventListener('click', function (params) {
     storedValues.secondNum = parseFloat(display.textContent);
@@ -93,16 +92,6 @@ equals.addEventListener('click', function (params) {
     storedValues.secondNum = 0;
     console.table(storedValues);
 }); 
-
-// clear.addEventListener('click', function() {
-//     storedValues = {
-//         operator: null,
-//         firstNum: 0,
-//         secondNum: 0,
-//     }
-//     displayValue = ""
-//     display.textContent = "0";
-// } )
 
 clear.addEventListener('click', function() {
     storedValues = {
