@@ -1,12 +1,11 @@
-const display = document.querySelector('#display-result');
+const displayResult = document.querySelector('#display-result');
 const digit = document.querySelectorAll('.digit');
 const operator = document.querySelectorAll('.operator');
 const equals = document.querySelector('#equals');
 const clear = document.querySelector('#clear');
 const decimalButton = document.querySelector('#decimal');
 const reducer = (accumulator, currentValue) => accumulator + currentValue;
-let displayValue = "";
-let display2 = [];
+let currentInputValues = [];
 let decimalClicked = false;
 
 // Operator functions
@@ -40,19 +39,8 @@ const operate = function(arr) {
     return c
 };
 
-// if (arr.operator === divide) {
-//     if (arr.firstNum || arr.secondNum === 0) {
-//         window.alert("You can't divide by zero!");
-//     } else {
-//         console.log(c);
-//         return c;
-//     }
-// }
-
-
 const nextFunction = function() {
-    storedValues.secondNum = parseFloat(display.textContent);
-    console.log(this.id);
+    storedValues.secondNum = parseFloat(displayResult.textContent);
     storedValues.firstNum = operate(storedValues);
     switch (this.id) {
         case "add":
@@ -68,8 +56,8 @@ const nextFunction = function() {
             storedValues.operator = divide;
             break;
     }
-    display.textContent = storedValues.firstNum;
-    display2 = [];
+    displayResult.textContent = storedValues.firstNum;
+    currentInputValues = [];
     decimalClicked = false
 };
 
@@ -77,17 +65,17 @@ const nextFunction = function() {
 //Button functions
 
 digit.forEach(event => event.addEventListener('click', e => {
-    display2.push(e.target.textContent)
+    currentInputValues.push(e.target.textContent)
     // if (e.target.textContent === '.') {
     //     decimal = true;
     // }
-    display.textContent = display2.reduce(reducer);
+    displayResult.textContent = currentInputValues.reduce(reducer);
 }));
 
 decimalButton.addEventListener('click', e => {
     if (decimalClicked === false) {
-        display2.push('.')
-        display.textContent = display2.reduce(reducer);
+        currentInputValues.push('.')
+        displayResult.textContent = currentInputValues.reduce(reducer);
         decimalClicked = true
     }
 });
@@ -95,8 +83,8 @@ decimalButton.addEventListener('click', e => {
 operator.forEach(event => event.addEventListener('click', nextFunction))
 
 equals.addEventListener('click', function() {
-    storedValues.secondNum = parseFloat(display.textContent);
-    display.textContent = operate(storedValues)
+    storedValues.secondNum = parseFloat(displayResult.textContent);
+    displayResult.textContent = operate(storedValues)
     storedValues.firstNum = 0;
     storedValues.secondNum = 0;
     decimalClicked = false
@@ -109,8 +97,8 @@ clear.addEventListener('click', function() {
         firstNum: 0,
         secondNum: 0,
     }
-    display2 = [];
-    display.textContent = "0";
+    currentInputValues = [];
+    displayResult.textContent = "0";
     decimalClicked = false
 } )
 
